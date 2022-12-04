@@ -1,0 +1,54 @@
+html, body {
+  height: 100%;
+}
+
+#app {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.frame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.board {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.row {
+  display: flex;
+  gap: 5px;
+}
+
+.cell {
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* line-height: 40px; */
+  /*  background-color: red; */
+  border: 2px white solid;
+}
+
+.cell.yes {
+  background-color: green;
+}
+
+.cell.present {
+  background-color: yellow;
+}
+
+.cell.no {
+  background-color: gray;
+}
+
+button {
+  margin: 10px;
+}
