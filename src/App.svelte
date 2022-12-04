@@ -45,9 +45,9 @@
       }
       let statuses = testGuess(rows[i], word.toUpperCase());
 
-      rows[i] = rows[i].map((cell, cellIndex) => ({
-        letter: rows[i][cellIndex].letter,
-        status: statuses[cellIndex],
+      rows[i] = rows[i].map((cell, j) => ({
+        letter: cell.letter,
+        status: statuses[j],
       }));
 
       if (statuses.every((v) => v === "yes")) {
