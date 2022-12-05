@@ -1,9 +1,21 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  let words = [];
-  let word = null;
-  let rows = [...Array(6)].map((e) => Array(5).fill(null));
+  enum Status {
+    Yes = "yes",
+    Present = "present",
+    No = "no",
+    Maybe = "",
+  }
+
+  interface Cell {
+    letter: string;
+    status: Status;
+  }
+
+  let words: string[] = [];
+  let word: string = null;
+  let rows: Cell[][] = [...Array(6)].map((e) => Array(5).fill(null));
   let i = 0;
   let j = 0;
   let done = false;
@@ -19,21 +31,16 @@
     window.addEventListener("keydown", handleKeyDown);
   });
 
-  function testGuess(guess, word) {
-    let statuses = [];
-    for (let i = 0; i < 5; i++) {
-      if (guess[i].letter === word[i]) {
-        statuses.push("yes");
-      } else if (word.includes(guess[i].letter)) {
-        statuses.push("present");
-      } else {
-        statuses.push("no");
-      }
-    }
-    return statuses;
-  }
+  const testGuess = (guess: Cell[], word: string): Status[] =>
+    guess.map((cell, i) =>
+      word[i] === cell.letter
+        ? Status.Yes
+        : word.includes(cell.letter)
+        ? Status.Present
+        : Status.No
+    );
 
-  function handleKeyDown(e) {
+  function handleKeyDown(e: KeyboardEvent) {
     if (done) {
       return;
     }
@@ -78,15 +85,15 @@
 
       rows[i][j] = {
         letter: e.key.toUpperCase(),
-        status: "",
+        status: Status.Maybe,
       };
 
       j += 1;
     }
   }
 
-  function handleRestartButton(e) {
-    e.target.blur();
+  function handleRestartButton(e: Event) {
+    (e.target as HTMLButtonElement).blur();
     rows = [...Array(6)].map((e) => Array(5).fill(null));
     i = 0;
     j = 0;
